@@ -19,7 +19,7 @@ declare VERSION_DIRECTORY="${PROJECT_DIRECTORY}/version"
 
 cd ${PROJECT_DIRECTORY}
 
-function pre_build
+function pre_build() 
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -38,7 +38,7 @@ function pre_build
 }
 
 
-function build
+function build() 
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -53,7 +53,7 @@ function build
     done < "${directory}/tags"
 }
 
-function post_build
+function post_build() 
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -69,7 +69,7 @@ function post_build
     fi
 }
 
-function test
+function test()
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -89,7 +89,7 @@ function test
     #bats /test/${version}.bats
 }
 
-function run
+function run()
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -109,7 +109,7 @@ function run
     docker run -it --rm ${DOCKER_IMAGE_NAME}:${version} bash
 }
 
-function commit
+function commit()
 {
     version=${1}
     directory=${VERSION_DIRECTORY}/${version}
@@ -190,7 +190,7 @@ for action in "${actions[@]}"; do
         pre-build)
             echo "Executing pre-build action"
             for version in "${versions[@]}"; do
-                pre-build $version
+                pre_build $version
             done
             ;;
 
@@ -204,7 +204,7 @@ for action in "${actions[@]}"; do
         post-build)
             echo "Executing post-build action"
             for version in "${versions[@]}"; do
-                post-build $version
+                post_build $version
             done
             ;;
 
