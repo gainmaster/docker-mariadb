@@ -30,7 +30,7 @@ function pre_build()
     fi
 
     if [ "${version}" == "mariadb-galera" ]; then
-        cd ${PROJECT_DIRECTORY}/${VERSION_DIRECTORY}/{version}
+        cd ${PROJECT_DIRECTORY}/${VERSION_DIRECTORY}/${version}
         ${PROJECT_DIRECTORY}/utility/galera-builder.sh
         ${PROJECT_DIRECTORY}/utility/mariadb-galera-builder.sh
         cd ${PROJECT_DIRECTORY}
