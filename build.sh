@@ -30,7 +30,7 @@ function pre_build()
     fi
 
     if [ "${version}" == "mariadb-galera" ]; then
-        cd ${PROJECT_DIRECTORY}/${VERSION_DIRECTORY}/${version}
+        cd ${VERSION_DIRECTORY}/${version}
         ${PROJECT_DIRECTORY}/utility/galera-builder.sh
         ${PROJECT_DIRECTORY}/utility/mariadb-galera-builder.sh
         cd ${PROJECT_DIRECTORY}
@@ -64,8 +64,8 @@ function post_build()
     fi
 
     if [ "version" == "mariadb" ]; then
-        rm -f ${PROJECT_DIRECTORY}/${VERSION_DIRECTORY}/{version}/galera.pkg.tar.xz
-        rm -f ${PROJECT_DIRECTORY}/${VERSION_DIRECTORY}/{version}/mariadb-galera.pkg.tar.xz
+        rm -f ${VERSION_DIRECTORY}/{version}/galera.pkg.tar.xz
+        rm -f ${VERSION_DIRECTORY}/{version}/mariadb-galera.pkg.tar.xz
     fi
 }
 

@@ -19,4 +19,4 @@ fi
 docker run $DOCKER_RUN_OPTIONS --rm \
   -v $PROJECT_DIRECTORY:/project \
   -w="/project${DOCKER_WORKING_DIRECTORY}/" \
-  gainmaster/archlinux:base-devel pacman-install-tar galera.pkg.tar.xz && aur-build-tar mariadb-galera
+  gainmaster/archlinux:base-devel bash -c 'pacman-install-tar galera.pkg.tar.xz && aur-build-tar mariadb-galera'
