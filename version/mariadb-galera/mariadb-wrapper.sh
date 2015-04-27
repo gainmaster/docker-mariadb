@@ -3,7 +3,10 @@
 MARIADB_HOME=/var/lib/mysql
 MARIADB_USER=mysql
 MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-password}
-ibdata1
+
+if [ -z "${CLUSTER_DOMAIN_NAME}" ]then;
+    exit 1
+fi
 
 if [ ! -f ${MARIADB_HOME}/ibdata1 ]; then
     # Create MariaDB filesystem
@@ -42,4 +45,9 @@ EOL
     sleep 10
 done;
 
-mysqld $@
+ping -c 1 ${CLUSTER_DOMAIN_NAME}
+if [ $? -eq 2 ]; then
+    mysqld --wsrep-new-cluster
+else
+    mysqld --wsrep_cluster_address=gcomm://${CLUSTER_DOMAIN_NAME}
+fi
