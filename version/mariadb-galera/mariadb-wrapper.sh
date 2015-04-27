@@ -4,11 +4,12 @@ MARIADB_HOME=/var/lib/mysql
 MARIADB_USER=mysql
 MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-password} #TODO: MAKE RANDOM
 
-if [ -z "${CLUSTER_DOMAIN_NAME}" ]then;
+if [ -z "${CLUSTER_DOMAIN_NAME}" ]; then
     exit 1
 fi
 
 if [ ! -f ${MARIADB_HOME}/ibdata1 ]; then
+    echo "POPULATE!"
     # Create MariaDB filesystem
     mysql_install_db \
         --user=${MARIADB_USER} \
@@ -16,7 +17,11 @@ if [ ! -f ${MARIADB_HOME}/ibdata1 ]; then
         --datadir=${MARIADB_HOME}
 
     chown -R ${MARIADB_USER}:${MARIADB_USER} ${MARIADB_HOME}
+fi
 
+#TODO: SECURE INSTALATION
+if [ ! -d ${MARIADB_HOME}/test ]; then
+    echo "SECURITY!"
     mysqld &
     sleep 10
 
@@ -43,7 +48,7 @@ EOL
 
     mysqld stop
     sleep 10
-done;
+fi
 
 ping -c 1 ${CLUSTER_DOMAIN_NAME}
 if [ $? -eq 2 ]; then
