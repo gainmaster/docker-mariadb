@@ -4,7 +4,8 @@ MARIADB_HOME=/var/lib/mysql
 MARIADB_USER=mysql
 MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:-password} #TODO: MAKE RANDOM
 
-if [ -z "${CLUSTER_DOMAIN_NAME}" ]; then
+if [ -z "${MYSQL_NODE_ADDRESS}" ]; then
+    echo "Missing node address"
     exit 1
 fi
 
@@ -50,9 +51,15 @@ EOL
     sleep 10
 fi
 
-ping -c 1 ${CLUSTER_DOMAIN_NAME}
-if [ $? -eq 2 ]; then
-    mysqld --wsrep-new-cluster
+if [ -z "${MYSQL_CLUSTER_DOMAIN_NAME}" ]; then
+    mysqld \
+        --wsrep-new-cluster \
+        --wsrep_node_address="${MYSQL_NODE_ADDRESS}" \
+        --wsrep_node_incoming_address="${MYSQL_NODE_ADDRESS}" \
+        --wsrep_cluster_address=gcomm://
 else
-    mysqld --wsrep_cluster_address=gcomm://${CLUSTER_DOMAIN_NAME}
+    mysqld \
+        --wsrep_node_address="${MYSQL_NODE_ADDRESS}" \
+        --wsrep_node_incoming_address="${MYSQL_NODE_ADDRESS}" \
+        --wsrep_cluster_address=gcomm://${MYSQL_CLUSTER_DOMAIN_NAME}
 fi
