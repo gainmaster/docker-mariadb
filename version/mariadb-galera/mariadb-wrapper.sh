@@ -51,15 +51,17 @@ EOL
     sleep 10
 fi
 
-if [ -z "${MYSQL_CLUSTER_DOMAIN_NAME}" ]; then
+if [ -z "$MYSQL_CLUSTER_DOMAIN_NAME" ]; then
+    echo "New cluster";
     mysqld \
         --wsrep-new-cluster \
         --wsrep_node_address="${MYSQL_NODE_ADDRESS}" \
-        --wsrep_node_incoming_address="${MYSQL_NODE_ADDRESS}" \
+        --wsrep_node_incoming_address="$MYSQL_NODE_ADDRESS" \
         --wsrep_cluster_address=gcomm://
 else
+    echo "Old cluster";
     mysqld \
-        --wsrep_node_address="${MYSQL_NODE_ADDRESS}" \
-        --wsrep_node_incoming_address="${MYSQL_NODE_ADDRESS}" \
-        --wsrep_cluster_address=gcomm://${MYSQL_CLUSTER_DOMAIN_NAME}
+        --wsrep_node_address="$MYSQL_NODE_ADDRESS" \
+        --wsrep_node_incoming_address="$MYSQL_NODE_ADDRESS" \
+        --wsrep_cluster_address=gcomm://$MYSQL_CLUSTER_DOMAIN_NAME
 fi
