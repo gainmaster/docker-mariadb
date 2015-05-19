@@ -9,7 +9,15 @@ This repository contains a **Dockerfile** for a base RabbitMQ Server image. It p
 [docker_hub_repository]: https://registry.hub.docker.com/u/gainmaster/mariadb/
 [docker_hub_base_image]: https://registry.hub.docker.com/u/gainmaster/archlinux/
 
-### Installed packages
+## Docker Hub automated build tags
+
+`gainmaster/mariadb` provides multiple tagged images:
+
+* `latest` (default) : MariaDB (alias to `mariadb`)
+* `mariadb` : MariaDB
+* `mariadb-galera` : MariaDB Galera Cluster
+
+## Installed packages
 
 * [MariaDB][mariadb] - An enhanced, drop-in replacement for MySQL.
 
